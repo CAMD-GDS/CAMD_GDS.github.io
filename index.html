@@ -271,14 +271,6 @@
                 </label>
             </div>
             <div class="project-grid" id="project-grid">
-                <article class="project-card" data-category="game" data-genre="simulation" data-name="orbit garden" data-project-id="orbit-garden">
-                    <div class="project-art art-coral"><span>OG</span></div>
-                    <div class="card-body"><div class="card-meta"><span class="mono">GAME / 2024</span><span>R. Chen</span></div><h3>Orbit Garden</h3><p>A tiny, strange farming game about growing life in zero gravity.</p><a class="card-link" href="https://example.com" target="_blank" rel="noopener">View project</a></div>
-                </article>
-                <article class="project-card" data-category="game" data-genre="adventure" data-name="mosslight" data-project-id="mosslight">
-                    <div class="project-art art-ink"><span>ML</span></div>
-                    <div class="card-body"><div class="card-meta"><span class="mono">GAME / 2023</span><span>A. Patel</span></div><h3>Mosslight</h3><p>Find your way through a hand-drawn forest that remembers where you walk.</p><a class="card-link" href="https://example.com" target="_blank" rel="noopener">View project</a></div>
-                </article>
                 <p class="empty-state" id="empty-state">No games match that search yet.</p>
             </div>
         </section>
@@ -357,7 +349,7 @@
         });
 
         // Directory elements, filters, and persisted game state.
-        const cards = [...document.querySelectorAll(".project-card")];
+        let cards = [];
         const search = document.querySelector("#search");
         const count = document.querySelector("#project-count");
         const emptyState = document.querySelector("#empty-state");
@@ -394,7 +386,11 @@
             card.dataset.genre = game.genre || "experimental";
             card.dataset.name = game.title.toLowerCase();
             card.dataset.projectId = game.id || `custom-${game.title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
-            card.innerHTML = `<div class="project-art art-lavender"><span>${game.title.slice(0, 2).toUpperCase()}</span></div><div class="card-body"><div class="card-meta"><span class="mono">GAME / NEW</span><span></span></div><h3></h3><p></p><a class="card-link" target="_blank" rel="noopener">Play game</a></div>`;
+            const artClass = game.artClass || "art-lavender";
+            const initials = game.initials || game.title.slice(0, 2).toUpperCase();
+            const year = game.year || "NEW";
+            const linkText = game.linkText || "Play game";
+            card.innerHTML = `<div class="project-art ${artClass}"><span>${initials}</span></div><div class="card-body"><div class="card-meta"><span class="mono">GAME / ${year}</span><span></span></div><h3></h3><p></p><a class="card-link" target="_blank" rel="noopener">${linkText}</a></div>`;
             if (game.image) {
                 const image = document.createElement("img");
                 image.alt = `${game.title} cover image`;
@@ -410,23 +406,33 @@
             cards.push(card);
         }
 
-        // Restore custom games from the browser's local storage.
-        try {
-            const savedGames = JSON.parse(localStorage.getItem("camd-games") || "[]");
-            savedGames.forEach((game) => {
-                if (!game.id) game.id = `custom-${game.title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
-                addGameCard(game);
-            });
-            localStorage.setItem("camd-games", JSON.stringify(savedGames));
-        } catch (error) {
-            localStorage.removeItem("camd-games");
-        }
+        // Load shared games from games.json, then restore browser-local games.
+        async function loadGames() {
+            try {
+                const response = await fetch("games.json");
+                if (!response.ok) throw new Error("Could not load games.json");
+                const sharedGames = await response.json();
+                sharedGames.forEach(addGameCard);
+            } catch (error) {
+                formStatus.textContent = "The shared game directory could not be loaded.";
+            }
 
-        // Apply previously removed-game state to the initial cards.
-        cards.forEach((card) => {
-            addRemoveButton(card);
-            if (removedProjects.has(card.dataset.projectId)) card.remove();
-        });
+            try {
+                const savedGames = JSON.parse(localStorage.getItem("camd-games") || "[]");
+                savedGames.forEach((game) => {
+                    if (!game.id) game.id = `custom-${game.title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
+                    addGameCard(game);
+                });
+                localStorage.setItem("camd-games", JSON.stringify(savedGames));
+            } catch (error) {
+                localStorage.removeItem("camd-games");
+            }
+
+            cards.forEach((card) => {
+                if (removedProjects.has(card.dataset.projectId)) card.remove();
+            });
+            updateProjects();
+        }
 
         // Updates visible cards and the result count after filtering.
         function updateProjects() {
@@ -440,7 +446,7 @@
                 card.hidden = !isVisible;
                 if (isVisible) visible += 1;
             });
-            count.textContent = `${visible} project${visible === 1 ? "" : "s"}`;
+            count.textContent = `${visible} game${visible === 1 ? "" : "s"}`;
             emptyState.style.display = visible ? "none" : "block";
         }
 
@@ -503,7 +509,7 @@
             formStatus.textContent = `${game.title} was added to the directory.`;
             updateProjects();
         });
-        updateProjects();
+        loadGames();
     </script>
 </body>
 </html>
