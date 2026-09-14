@@ -24,5 +24,16 @@
 		"linkText": "View project",
 		"artClass": "art-ink",
 		"initials": "ML"
-	}
+	},
+    {
+  "id": "featured",
+  "title": "Orbit Garden",
+  "creator": "R. Chen",
+  "year": "2024",
+  "genre": "simulation",
+  "description": "A tiny, strange farming game about growing life in zero gravity.",
+  "url": "https://example.com",
+  "image": "images/orbit-garden.jpg",
+  "linkText": "Play featured game"
+}
 ]
