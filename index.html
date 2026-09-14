@@ -410,7 +410,7 @@
         async function loadGames() {
             let sharedGames = [];
             try {
-                const response = await fetch("games.json");
+                const response = await fetch(`games.json?updated=${Date.now()}`, { cache: "no-store" });
                 if (!response.ok) throw new Error("Could not load games.json");
                 sharedGames = await response.json();
             } catch (error) {
@@ -420,13 +420,17 @@
             try {
                 const savedGames = JSON.parse(localStorage.getItem("camd-games") || "[]");
                 const sharedGameIds = new Set(sharedGames.map((game) => game.id));
-                const localGames = savedGames.filter((game) => !sharedGameIds.has(game.id));
+                const previousSharedIds = new Set(JSON.parse(localStorage.getItem("camd-shared-game-ids") || "[]"));
+                const localGames = savedGames.filter((game) => game.id.startsWith("custom-") && !sharedGameIds.has(game.id) && !previousSharedIds.has(game.id));
                 const synchronizedGames = [...sharedGames, ...localGames];
                 synchronizedGames.forEach((game) => {
                     if (!game.id) game.id = `custom-${game.title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
                     addGameCard(game);
                 });
                 localStorage.setItem("camd-games", JSON.stringify(synchronizedGames));
+                localStorage.setItem("camd-shared-game-ids", JSON.stringify([...sharedGameIds]));
+                sharedGameIds.forEach((id) => removedProjects.delete(id));
+                localStorage.setItem("camd-removed-projects", JSON.stringify([...removedProjects]));
             } catch (error) {
                 localStorage.removeItem("camd-games");
             }
