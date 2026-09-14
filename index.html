@@ -408,22 +408,25 @@
 
         // Load shared games from games.json, then restore browser-local games.
         async function loadGames() {
+            let sharedGames = [];
             try {
                 const response = await fetch("games.json");
                 if (!response.ok) throw new Error("Could not load games.json");
-                const sharedGames = await response.json();
-                sharedGames.forEach(addGameCard);
+                sharedGames = await response.json();
             } catch (error) {
                 formStatus.textContent = "The shared game directory could not be loaded.";
             }
 
             try {
                 const savedGames = JSON.parse(localStorage.getItem("camd-games") || "[]");
-                savedGames.forEach((game) => {
+                const sharedGameIds = new Set(sharedGames.map((game) => game.id));
+                const localGames = savedGames.filter((game) => !sharedGameIds.has(game.id));
+                const synchronizedGames = [...sharedGames, ...localGames];
+                synchronizedGames.forEach((game) => {
                     if (!game.id) game.id = `custom-${game.title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
                     addGameCard(game);
                 });
-                localStorage.setItem("camd-games", JSON.stringify(savedGames));
+                localStorage.setItem("camd-games", JSON.stringify(synchronizedGames));
             } catch (error) {
                 localStorage.removeItem("camd-games");
             }
