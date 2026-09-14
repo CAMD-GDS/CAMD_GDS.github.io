@@ -138,6 +138,16 @@
         .hero-note strong { display: block; font-size: 1.35rem; letter-spacing: -0.04em; line-height: 1.1; margin: 18px 0 10px; }
         .hero-note p { font-size: 0.87rem; margin: 0; }
 
+        /* Wide-screen side notes that frame the archive without covering content. */
+        .field-notes { display: flex; flex-direction: column; gap: 22px; position: fixed; top: 190px; width: 136px; z-index: 3; }
+        .field-notes-left { left: max(16px, calc(50% - 760px)); }
+        .field-notes-right { right: max(16px, calc(50% - 760px)); }
+        .field-note { box-shadow: var(--shadow); padding: 16px; }
+        .field-note:nth-child(odd) { background: var(--lime); transform: rotate(-2deg); }
+        .field-note:nth-child(even) { background: var(--coral); color: white; transform: rotate(2deg); }
+        .field-note .mono { display: block; font-size: 0.58rem; margin-bottom: 10px; }
+        .field-note p { font-size: 0.75rem; line-height: 1.25; margin: 0; }
+
         /* Featured game presentation. */
         .featured-game { background: var(--surface); display: none; margin-bottom: 64px; }
         .featured-game.is-visible { display: grid; grid-template-columns: minmax(280px, 1fr) minmax(0, 1fr); }
@@ -216,6 +226,10 @@
         footer { border-top: 1px solid var(--line); color: var(--muted); display: flex; font-size: 0.76rem; justify-content: space-between; margin-top: 64px; padding-top: 20px; }
 
         /* Responsive layout adjustments for smaller screens. */
+        @media (max-width: 1500px) {
+            .field-notes { display: none; }
+        }
+
         @media (max-width: 1000px) {
             .project-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
         }
@@ -248,6 +262,28 @@
     <header class="topbar">
         <a class="brand" href="home.html"><span class="brand-mark"></span> CAMD / GAMES</a>
     </header>
+
+    <!-- Additional field notes displayed in the side gutters on wide screens. -->
+    <aside class="field-notes field-notes-left" aria-label="Field notes">
+        <div class="field-note">
+            <span class="mono">Field note / 002</span>
+            <p>Where Art, Science, and Play Converge. </p>
+        </div>
+        <div class="field-note">
+            <span class="mono">Field note / 003</span>
+            <p>Experience Innovation, Play with Purpose.</p>
+        </div>
+    </aside>
+    <aside class="field-notes field-notes-right" aria-label="More field notes">
+        <div class="field-note">
+            <span class="mono">Field note / 004</span>
+            <p>Game On: Where Ideas Turn Into Experiences.</p>
+        </div>
+        <div class="field-note">
+            <span class="mono">Field note / 005</span>
+            <p>Every prototype is an invitation.</p>
+        </div>
+    </aside>
 
     <main>
         <!-- Introductory hero section for the games archive. -->
