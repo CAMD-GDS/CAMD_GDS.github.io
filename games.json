@@ -1,0 +1,26 @@
+[
+	{
+		"id": "orbit-garden",
+		"title": "Orbit Garden",
+		"creator": "R. Chen",
+		"year": "2024",
+		"genre": "simulation",
+		"description": "A tiny, strange farming game about growing life in zero gravity.",
+		"url": "https://example.com",
+		"linkText": "View project",
+		"artClass": "art-coral",
+		"initials": "OG"
+	},
+	{
+		"id": "mosslight",
+		"title": "Mosslight",
+		"creator": "A. Patel",
+		"year": "2023",
+		"genre": "adventure",
+		"description": "Find your way through a hand-drawn forest that remembers where you walk.",
+		"url": "https://example.com",
+		"linkText": "View project",
+		"artClass": "art-ink",
+		"initials": "ML"
+	}
+]
