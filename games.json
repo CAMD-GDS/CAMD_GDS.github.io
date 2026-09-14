@@ -1,24 +1,26 @@
 [
 	{
-		"id": "bee",
-		"title": "bee game",
-		"creator": "A. Moreau",
-		"year": "2026",
-		"genre": "adventure",
-		"description": "Find your way through a hand-drawn forest that remembers where you walk.",
+		"id": "orbit-garden",
+		"title": "Orbit Garden",
+		"creator": "R. Chen",
+		"year": "2024",
+		"genre": "simulation",
+		"description": "A tiny, strange farming game about growing life in zero gravity.",
 		"url": "https://example.com",
+		"image": "images/GANU_Logotype_BlackLetters_v01a_transparent.png",
 		"linkText": "View project",
-		"artClass": "art-ink",
-		"initials": "ML"
+		"artClass": "art-coral",
+		"initials": "OG"
 	},
 	{
-		"id": "bee",
-		"title": "help",
-		"creator": "A. Moreau",
-		"year": "2026",
+		"id": "mosslight",
+		"title": "Mosslight",
+		"creator": "A. Patel",
+		"year": "2023",
 		"genre": "adventure",
 		"description": "Find your way through a hand-drawn forest that remembers where you walk.",
 		"url": "https://example.com",
+		"image": "images/GANU_Logotype_WhiteLetters_v01a_transparent.png",
 		"linkText": "View project",
 		"artClass": "art-ink",
 		"initials": "ML"
