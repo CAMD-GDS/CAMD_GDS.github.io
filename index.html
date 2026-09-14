@@ -158,7 +158,10 @@
         .art-lavender { background: var(--lavender); }
         .art-ink { background: var(--ink); }
         .project-art span { color: white; font-size: 4rem; font-weight: 700; letter-spacing: -0.1em; line-height: 1; transform: rotate(-8deg); }
-        .project-art img { height: 100%; inset: 0; max-height: 100%; max-width: 100%; object-fit: cover; position: absolute; width: 100%; z-index: 1; }
+        .project-art.has-image { background: transparent; }
+        .project-art.has-image::after { display: none; }
+        .project-art.has-image span { display: none; }
+        .project-art img { display: block; height: 100%; inset: 0; object-fit: contain; padding: 12px; position: absolute; width: 100%; z-index: 1; }
         .art-lavender span { color: var(--ink); }
         .project-art::after { border: 1px solid rgba(255,255,255,0.5); border-radius: 50%; content: ""; height: 210px; position: absolute; width: 210px; }
         .card-body { padding: 18px 19px 20px; }
@@ -395,7 +398,9 @@
                 const image = document.createElement("img");
                 image.alt = `${game.title} cover image`;
                 image.src = game.image;
-                card.querySelector(".project-art").prepend(image);
+                const projectArt = card.querySelector(".project-art");
+                projectArt.classList.add("has-image");
+                projectArt.prepend(image);
             }
             card.querySelector(".card-meta span:last-child").textContent = game.creator;
             card.querySelector("h3").textContent = game.title;
