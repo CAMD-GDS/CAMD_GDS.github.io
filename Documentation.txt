@@ -1,0 +1,17 @@
+Link to Form: https://forms.cloud.microsoft/Pages/DesignPageV2.aspx?subpage=design&FormId=gcLuqKOqrk2sm5o5i5IV5zT3PoH4_FREs27ZJy5ERC1UNjQ5UEwyTEE4UTNHVjY1N1VVRlA0UDdYNC4u&Token=157c4e9aad0b4d65a05d562dd3fe6eff
+After a student makes an entry follow the template and input the entry into the games.json file and commit changes
+
+EXAMPLE ENTRY
+{
+		"id": "mosslight", <-- if "featured" will be placed at top of page
+		"title": "titleofgame",
+		"creator": "Firstname Lastname",
+		"year": "2023",
+		"genre": "",
+		"description": "",
+		"url": "https://example.com",
+		"image": "path/to/image",
+		"linkText": "View project",
+		"artClass": "art-ink",
+		"initials": "FL"
+	}
