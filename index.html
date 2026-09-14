@@ -138,6 +138,16 @@
         .hero-note strong { display: block; font-size: 1.35rem; letter-spacing: -0.04em; line-height: 1.1; margin: 18px 0 10px; }
         .hero-note p { font-size: 0.87rem; margin: 0; }
 
+        /* Featured game presentation. */
+        .featured-game { background: var(--surface); display: none; margin-bottom: 64px; }
+        .featured-game.is-visible { display: grid; grid-template-columns: minmax(280px, 1fr) minmax(0, 1fr); }
+        .featured-game-art { align-items: center; background: var(--paper); display: flex; min-height: 300px; justify-content: center; overflow: hidden; }
+        .featured-game-art img { display: block; height: 100%; max-height: 360px; max-width: 100%; object-fit: contain; width: 100%; }
+        .featured-game-copy { align-self: center; padding: 44px; }
+        .featured-game-copy .mono { color: var(--coral); font-size: 0.7rem; }
+        .featured-game-copy h2 { font-size: clamp(2rem, 5vw, 4rem); letter-spacing: -0.07em; line-height: 0.95; margin: 16px 0; }
+        .featured-game-copy p { color: var(--muted); max-width: 440px; }
+
         /* Game directory controls, cards, and empty state. */
         .directory-head { align-items: center; border-top: 1px solid var(--line); display: flex; gap: 20px; justify-content: space-between; padding: 28px 0 20px; }
         .directory-title { font-size: 1.2rem; letter-spacing: -0.04em; margin: 0; }
@@ -213,6 +223,9 @@
             .hero-image { height: 220px; margin-bottom: 42px; }
             h1 { font-size: clamp(3.4rem, 17vw, 5.6rem); }
             .hero-note { margin: 45px 10px 0 auto; }
+            .featured-game.is-visible { display: block; }
+            .featured-game-art { min-height: 220px; }
+            .featured-game-copy { padding: 28px 24px; }
             .controls { align-items: stretch; flex-direction: column; }
             .search { max-width: none; width: 100%; }
             .project-grid { grid-template-columns: 1fr; }
@@ -249,6 +262,17 @@
                 <strong>Make something. Put it in the world.</strong>
                 <p>Explore the archive, find a new collaborator, or share what you have been building.</p>
             </aside>
+        </section>
+
+        <!-- Dedicated display for the games.json entry with id "featured". -->
+        <section class="featured-game" id="featured-game" aria-labelledby="featured-game-title">
+            <div class="featured-game-art" id="featured-game-art"></div>
+            <div class="featured-game-copy">
+                <span class="mono">Featured game</span>
+                <h2 id="featured-game-title"></h2>
+                <p id="featured-game-description"></p>
+                <a class="card-link" id="featured-game-link" target="_blank" rel="noopener">Play featured game</a>
+            </div>
         </section>
 
         <!-- Searchable and filterable collection of game cards. -->
@@ -359,6 +383,11 @@
         const gameForm = document.querySelector("#game-form");
         const formStatus = document.querySelector("#form-status");
         const genreFilter = document.querySelector("#genre-filter");
+        const featuredGame = document.querySelector("#featured-game");
+        const featuredGameArt = document.querySelector("#featured-game-art");
+        const featuredGameTitle = document.querySelector("#featured-game-title");
+        const featuredGameDescription = document.querySelector("#featured-game-description");
+        const featuredGameLink = document.querySelector("#featured-game-link");
         const removedProjects = new Set(JSON.parse(localStorage.getItem("camd-removed-projects") || "[]"));
         let activeGenre = "all";
 
@@ -411,6 +440,26 @@
             cards.push(card);
         }
 
+        // Renders the special games.json entry with id "featured".
+        function renderFeaturedGame(game) {
+            featuredGameArt.className = `featured-game-art ${game.artClass || ""}`;
+            featuredGameArt.replaceChildren();
+            if (game.image) {
+                const image = document.createElement("img");
+                image.alt = `${game.title} cover image`;
+                image.src = game.image;
+                featuredGameArt.append(image);
+            } else {
+                featuredGameArt.textContent = game.initials || game.title.slice(0, 2).toUpperCase();
+            }
+            featuredGameTitle.textContent = game.title;
+            featuredGameDescription.textContent = game.description;
+            featuredGameLink.href = game.url;
+            featuredGameLink.textContent = game.linkText || "Play featured game";
+            featuredGame.hidden = false;
+            featuredGame.classList.add("is-visible");
+        }
+
         // Load shared games from games.json, then restore browser-local games.
         async function loadGames() {
             let sharedGames = [];
@@ -430,7 +479,11 @@
                 const synchronizedGames = [...sharedGames, ...localGames];
                 synchronizedGames.forEach((game) => {
                     if (!game.id) game.id = `custom-${game.title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
-                    addGameCard(game);
+                    if (game.id === "featured") {
+                        renderFeaturedGame(game);
+                    } else {
+                        addGameCard(game);
+                    }
                 });
                 localStorage.setItem("camd-games", JSON.stringify(synchronizedGames));
                 localStorage.setItem("camd-shared-game-ids", JSON.stringify([...sharedGameIds]));
