@@ -1,3 +1,15 @@
 [
-
+ {
+		"id": "featured", 
+		"title": "Dead Water",
+		"creator": "Genevieve Dreger",
+		"year": "2026",
+		"genre": "Horror",
+		"description": "Short Horror game about a Fishermans daughter investigating her fathers disappearance at sea",
+		"url": "https://kkengeri.itch.io/level-design-final-project",
+		"image": "images/deadWaterLogo_Genevieve Dreger.png",
+		"linkText": "View project",
+		"artClass": "art-ink",
+		"initials": "GD"
+	}
 ]
