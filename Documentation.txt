@@ -10,7 +10,7 @@ EXAMPLE ENTRY
 		"genre": "",
 		"description": "",
 		"url": "https://example.com",
-		"image": "path/to/image",
+		"image": "images/filename",
 		"linkText": "View project",
 		"artClass": "art-ink",
 		"initials": "FL"
