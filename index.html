@@ -156,6 +156,7 @@
         .featured-game-copy { align-self: center; padding: 44px; }
         .featured-game-copy .mono { color: var(--coral); font-size: 0.7rem; }
         .featured-game-copy h2 { font-size: clamp(2rem, 5vw, 4rem); letter-spacing: -0.07em; line-height: 0.95; margin: 16px 0; }
+        .featured-game-copy .featured-game-creator { color: var(--ink); font-size: 0.85rem; font-weight: 600; letter-spacing: 0.04em; margin: -8px 0 18px; text-transform: uppercase; }
         .featured-game-copy p { color: var(--muted); max-width: 440px; }
 
         /* Game directory controls, cards, and empty state. */
@@ -310,6 +311,7 @@
             <div class="featured-game-copy">
                 <span class="mono">Featured game</span>
                 <h2 id="featured-game-title"></h2>
+                <p class="featured-game-creator" id="featured-game-creator"></p>
                 <p id="featured-game-description"></p>
                 <a class="card-link" id="featured-game-link" target="_blank" rel="noopener">Play featured game</a>
             </div>
@@ -427,6 +429,7 @@
         const featuredGame = document.querySelector("#featured-game");
         const featuredGameArt = document.querySelector("#featured-game-art");
         const featuredGameTitle = document.querySelector("#featured-game-title");
+        const featuredGameCreator = document.querySelector("#featured-game-creator");
         const featuredGameDescription = document.querySelector("#featured-game-description");
         const featuredGameLink = document.querySelector("#featured-game-link");
         const removedProjects = new Set(JSON.parse(localStorage.getItem("camd-removed-projects") || "[]"));
@@ -460,10 +463,8 @@
             card.dataset.name = game.title.toLowerCase();
             card.dataset.projectId = game.id || `custom-${game.title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
             const artClass = game.artClass || "art-lavender";
-            const initials = game.initials || game.title.slice(0, 2).toUpperCase();
-            const year = game.year || "NEW";
             const linkText = game.linkText || "Play game";
-            card.innerHTML = `<div class="project-art ${artClass}"><span>${initials}</span></div><div class="card-body"><div class="card-meta"><span class="mono">GAME / ${year}</span><span></span></div><h3></h3><p></p><a class="card-link" target="_blank" rel="noopener">${linkText}</a></div>`;
+            card.innerHTML = `<div class="project-art ${artClass}"><span></span></div><div class="card-body"><div class="card-meta"><span class="mono"></span><span></span></div><h3></h3><p></p><a class="card-link" target="_blank" rel="noopener">${linkText}</a></div>`;
             if (game.image) {
                 const image = document.createElement("img");
                 image.alt = `${game.title} cover image`;
@@ -494,6 +495,7 @@
                 featuredGameArt.textContent = game.initials || game.title.slice(0, 2).toUpperCase();
             }
             featuredGameTitle.textContent = game.title;
+            featuredGameCreator.textContent = game.creator ? `By ${game.creator}` : "";
             featuredGameDescription.textContent = game.description;
             featuredGameLink.href = game.url;
             featuredGameLink.textContent = game.linkText || "Play featured game";

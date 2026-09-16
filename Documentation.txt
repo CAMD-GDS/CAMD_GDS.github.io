@@ -6,12 +6,10 @@ EXAMPLE ENTRY
 		"id": "mosslight", <-- if "featured" will be placed at top of page
 		"title": "titleofgame",
 		"creator": "Firstname Lastname",
-		"year": "2023",
 		"genre": "",
 		"description": "",
 		"url": "https://example.com",
 		"image": "images/filename",
 		"linkText": "View project",
-		"artClass": "art-ink",
-		"initials": "FL"
+		"artClass": "art-ink"
 	}
