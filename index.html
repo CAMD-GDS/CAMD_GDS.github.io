@@ -124,6 +124,7 @@
         .eyebrow { color: var(--teal); font-size: 0.7rem; font-weight: 500; margin: 0 0 22px; }
         h1 { font-size: clamp(3.3rem, 8vw, 7.1rem); letter-spacing: -0.085em; line-height: 0.88; margin: 0; max-width: 760px; }
         .hero-copy { color: var(--muted); font-size: 1.05rem; margin: 28px 0 0; max-width: 440px; }
+        .hero .submit-link { display: inline-block; margin-top: 18px; }
 
         .hero-note {
             background: var(--lime);
@@ -191,39 +192,9 @@
         .card-body p { color: var(--muted); font-size: 0.84rem; margin: 0 0 19px; }
         .card-link { color: var(--teal); font-size: 0.8rem; font-weight: 600; }
         .card-link::after { content: "  ↗"; }
-        .remove-game { background: transparent; border: 0; color: var(--coral); cursor: pointer; display: none; font-size: 0.72rem; margin-left: 14px; padding: 0; }
-        body.admin-mode .remove-game { display: inline; }
-        .remove-game:hover { color: white; text-decoration: underline; }
 
-        /* Admin authentication, game submission form, and footer styles. */
+        /* Empty state and footer styles. */
         .empty-state { color: var(--muted); display: none; grid-column: 1 / -1; padding: 40px 0; text-align: center; }
-        .add-game { background: var(--ink); color: white; margin-top: 72px; padding: 34px; }
-        .admin-only { display: none; }
-        body.admin-mode .admin-only { display: block; }
-        .admin-login { background: var(--surface); border: 1px solid var(--line); margin-top: 72px; padding: 28px; }
-        .admin-login h2 { font-size: 1.25rem; letter-spacing: -0.05em; margin: 0 0 6px; }
-        .admin-login p { color: var(--muted); font-size: 0.82rem; margin: 0 0 18px; }
-        .admin-login form { display: flex; gap: 10px; max-width: 430px; }
-        .admin-login input { border: 1px solid var(--line); min-width: 0; outline: none; padding: 10px 12px; width: 100%; }
-        .admin-login input:focus { border-color: var(--teal); }
-        .admin-login button { background: var(--teal); border: 0; color: white; cursor: pointer; padding: 10px 16px; }
-        .admin-login button:hover { background: var(--ink); }
-        .admin-login .form-status { color: var(--coral); margin: 12px 0 0; }
-        .admin-trigger { background: transparent; border: 0; color: var(--muted); cursor: pointer; font-size: 0.76rem; padding: 0; }
-        .admin-trigger:hover { color: var(--ink); }
-        .add-game-head { align-items: end; display: flex; justify-content: space-between; gap: 20px; margin-bottom: 24px; }
-        .add-game h2 { font-size: 1.7rem; letter-spacing: -0.06em; margin: 0; }
-        .add-game-intro { color: var(--line); font-size: 0.82rem; margin: 6px 0 0; max-width: 430px; }
-        .add-game-note { color: var(--lime); font-size: 0.68rem; margin: 0; text-align: right; }
-        .game-form { display: grid; gap: 14px; grid-template-columns: 1fr 1fr; }
-        .game-form label { color: var(--line); display: grid; font-size: 0.72rem; gap: 6px; }
-        .game-form .full-width { grid-column: 1 / -1; }
-        .game-form input, .game-form select, .game-form textarea { background: var(--teal); border: 1px solid var(--line); border-radius: 0; color: white; outline: none; padding: 11px 12px; }
-        .game-form textarea { min-height: 76px; resize: vertical; }
-        .game-form input:focus, .game-form textarea:focus { border-color: var(--lime); }
-        .game-form button { background: var(--lime); border: 0; color: var(--ink); cursor: pointer; font-size: 0.82rem; font-weight: 700; justify-self: start; padding: 12px 18px; }
-        .game-form button:hover { background: white; }
-        .form-status { color: var(--lime); font-size: 0.78rem; margin: 0; }
         footer { border-top: 1px solid var(--line); color: var(--muted); display: flex; font-size: 0.76rem; justify-content: space-between; margin-top: 64px; padding-top: 20px; }
 
         /* Responsive layout adjustments for smaller screens. */
@@ -248,12 +219,6 @@
             .controls { align-items: stretch; flex-direction: column; }
             .search { max-width: none; width: 100%; }
             .project-grid { grid-template-columns: 1fr; }
-            .add-game { padding: 24px 20px; }
-            .admin-login form { flex-direction: column; }
-            .add-game-head { align-items: start; flex-direction: column; }
-            .add-game-note { text-align: left; }
-            .game-form { grid-template-columns: 1fr; }
-            .game-form .full-width { grid-column: auto; }
             footer { gap: 15px; flex-direction: column; }
         }
     </style>
@@ -297,6 +262,7 @@
                 <p class="eyebrow">Student games, shared openly</p>
                 <h1>Ideas worth<br>clicking into.</h1>
                 <p class="hero-copy">A living collection of games and digital worlds made by students at Northeastern University.</p>
+                <a class="submit-link" href="https://forms.cloud.microsoft/r/506k9S4hsF" target="_blank" rel="noopener">Submit Your Game</a>
             </div>
             <aside class="hero-note">
                 <span class="mono">Field note / 001</span>
@@ -345,86 +311,15 @@
             </div>
         </section>
 
-        <!-- Hidden admin login revealed by the footer control or URL parameter. -->
-        <section class="admin-login" id="admin-login" hidden aria-labelledby="admin-login-title">
-            <h2 id="admin-login-title">Admin access</h2>
-            <p>Sign in to add a game to the project directory.</p>
-            <form id="admin-login-form">
-                <label class="visually-hidden" for="admin-password">Admin password</label>
-                <input id="admin-password" name="admin-password" type="password" required placeholder="Admin password" autocomplete="current-password">
-                <button type="submit">Unlock entry</button>
-            </form>
-            <p class="form-status" id="admin-status" role="alert"></p>
-        </section>
-
-        <!-- Admin-only form for adding a new game to local storage. -->
-        <section class="add-game admin-only" id="add-game" aria-labelledby="add-game-title">
-            <div class="add-game-head">
-                <div>
-                    <h2 id="add-game-title">Got a game to share?</h2>
-                    <p class="add-game-intro">Add a link to a game hosted on itch.io, GitHub Pages, or anywhere else on the web.</p>
-                </div>
-                <p class="add-game-note mono">Admin mode</p>
-            </div>
-            <form class="game-form" id="game-form">
-                <label>Game title <input id="game-title" name="title" required placeholder="e.g. Star Collector"></label>
-                <label>Your name <input id="game-creator" name="creator" required placeholder="e.g. Alex Kim"></label>
-                <label>Game image <input id="game-image" name="image" type="file" accept="image/png,image/jpeg,image/webp" required></label>
-                <label>Game link <input id="game-url" name="url" type="url" required placeholder="https://your-game-link.com"></label>
-                <label>Genre
-                    <select id="game-genre" name="genre" required>
-                        <option value="">Choose a genre</option>
-                        <option value="adventure">Adventure</option>
-                        <option value="experimental">Experimental</option>
-                        <option value="narrative">Narrative</option>
-                        <option value="simulation">Simulation</option>
-                    </select>
-                </label>
-                <label class="full-width">Short description <textarea id="game-description" name="description" required maxlength="140" placeholder="What should people know before they play?"></textarea></label>
-                <button type="submit">Add game to the directory ↗</button>
-                <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
-            </form>
-        </section>
-
-        <!-- Footer with archive attribution and admin access. -->
-        <footer><span>CAMD / Student Games Archive</span><button class="admin-trigger" id="admin-trigger" type="button">Admin access</button><span>Made by students, for everyone.</span></footer>
+        <footer><span>CAMD / Student Games Archive</span><span>Made by students, for everyone.</span></footer>
     </main>
 
     <script>
-        // Admin login and access state.
-        const ADMIN_PASSWORD = "camd-admin-2026";
-        const adminRequested = new URLSearchParams(window.location.search).get("admin") === "1";
-        const adminLogin = document.querySelector("#admin-login");
-        const adminLoginForm = document.querySelector("#admin-login-form");
-        const adminStatus = document.querySelector("#admin-status");
-        const adminTrigger = document.querySelector("#admin-trigger");
-        if (adminRequested) adminLogin.hidden = false;
-
-        adminTrigger.addEventListener("click", () => {
-            adminLogin.hidden = false;
-            adminLogin.scrollIntoView({ behavior: "smooth", block: "center" });
-            document.querySelector("#admin-password").focus();
-        });
-
-        adminLoginForm.addEventListener("submit", (event) => {
-            event.preventDefault();
-            if (adminLoginForm.elements["admin-password"].value === ADMIN_PASSWORD) {
-                document.body.classList.add("admin-mode");
-                adminLogin.hidden = true;
-                window.history.replaceState({}, "", window.location.pathname);
-            } else {
-                adminStatus.textContent = "That password is not correct.";
-                adminLoginForm.reset();
-            }
-        });
-
-        // Directory elements, filters, and persisted game state.
+        // Directory elements and filters.
         let cards = [];
         const search = document.querySelector("#search");
         const count = document.querySelector("#project-count");
         const emptyState = document.querySelector("#empty-state");
-        const gameForm = document.querySelector("#game-form");
-        const formStatus = document.querySelector("#form-status");
         const genreFilter = document.querySelector("#genre-filter");
         const featuredGame = document.querySelector("#featured-game");
         const featuredGameArt = document.querySelector("#featured-game-art");
@@ -432,36 +327,14 @@
         const featuredGameCreator = document.querySelector("#featured-game-creator");
         const featuredGameDescription = document.querySelector("#featured-game-description");
         const featuredGameLink = document.querySelector("#featured-game-link");
-        const removedProjects = new Set(JSON.parse(localStorage.getItem("camd-removed-projects") || "[]"));
         let activeGenre = "all";
 
-        // Adds the admin-only removal action to a game card.
-        function addRemoveButton(card) {
-            if (card.dataset.category !== "game" || card.querySelector(".remove-game")) return;
-            const removeButton = document.createElement("button");
-            removeButton.className = "remove-game";
-            removeButton.type = "button";
-            removeButton.textContent = "Remove";
-            removeButton.addEventListener("click", () => {
-                if (!window.confirm(`Remove ${card.querySelector("h3").textContent}?`)) return;
-                removedProjects.add(card.dataset.projectId);
-                localStorage.setItem("camd-removed-projects", JSON.stringify([...removedProjects]));
-                const savedGames = JSON.parse(localStorage.getItem("camd-games") || "[]");
-                localStorage.setItem("camd-games", JSON.stringify(savedGames.filter((game) => game.id !== card.dataset.projectId)));
-                card.remove();
-                updateProjects();
-            });
-            card.querySelector(".card-link").after(removeButton);
-        }
-
-        // Builds a card for a game saved through the admin form.
+        // Builds a card for a shared game.
         function addGameCard(game) {
             const card = document.createElement("article");
             card.className = "project-card";
-            card.dataset.category = "game";
-            card.dataset.genre = game.genre || "experimental";
+            card.dataset.genre = (game.genre || "experimental").toLowerCase();
             card.dataset.name = game.title.toLowerCase();
-            card.dataset.projectId = game.id || `custom-${game.title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
             const artClass = game.artClass || "art-lavender";
             const linkText = game.linkText || "Play game";
             card.innerHTML = `<div class="project-art ${artClass}"><span></span></div><div class="card-body"><div class="card-meta"><span class="mono"></span><span></span></div><h3></h3><p></p><a class="card-link" target="_blank" rel="noopener">${linkText}</a></div>`;
@@ -478,7 +351,6 @@
             card.querySelector("p").textContent = game.description;
             card.querySelector("a").href = game.url;
             document.querySelector("#project-grid").insertBefore(card, emptyState);
-            addRemoveButton(card);
             cards.push(card);
         }
 
@@ -511,33 +383,15 @@
                 if (!response.ok) throw new Error("Could not load games.json");
                 sharedGames = await response.json();
             } catch (error) {
-                formStatus.textContent = "The shared game directory could not be loaded.";
+                console.error("The shared game directory could not be loaded.", error);
             }
 
-            try {
-                const savedGames = JSON.parse(localStorage.getItem("camd-games") || "[]");
-                const sharedGameIds = new Set(sharedGames.map((game) => game.id));
-                const previousSharedIds = new Set(JSON.parse(localStorage.getItem("camd-shared-game-ids") || "[]"));
-                const localGames = savedGames.filter((game) => game.id.startsWith("custom-") && !sharedGameIds.has(game.id) && !previousSharedIds.has(game.id));
-                const synchronizedGames = [...sharedGames, ...localGames];
-                synchronizedGames.forEach((game) => {
-                    if (!game.id) game.id = `custom-${game.title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
-                    if (game.id === "featured") {
-                        renderFeaturedGame(game);
-                    } else {
-                        addGameCard(game);
-                    }
-                });
-                localStorage.setItem("camd-games", JSON.stringify(synchronizedGames));
-                localStorage.setItem("camd-shared-game-ids", JSON.stringify([...sharedGameIds]));
-                sharedGameIds.forEach((id) => removedProjects.delete(id));
-                localStorage.setItem("camd-removed-projects", JSON.stringify([...removedProjects]));
-            } catch (error) {
-                localStorage.removeItem("camd-games");
-            }
-
-            cards.forEach((card) => {
-                if (removedProjects.has(card.dataset.projectId)) card.remove();
+            sharedGames.forEach((game) => {
+                if (game.id === "featured") {
+                    renderFeaturedGame(game);
+                } else {
+                    addGameCard(game);
+                }
             });
             updateProjects();
         }
@@ -562,59 +416,6 @@
         search.addEventListener("input", updateProjects);
         genreFilter.addEventListener("change", () => {
             activeGenre = genreFilter.value;
-            updateProjects();
-        });
-        // Resizes uploaded cover art before storing it as a data URL.
-        function readImage(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.addEventListener("load", () => {
-                    const source = new Image();
-                    source.addEventListener("load", () => {
-                        const maxWidth = 1200;
-                        const maxHeight = 675;
-                        const scale = Math.min(1, maxWidth / source.naturalWidth, maxHeight / source.naturalHeight);
-                        const canvas = document.createElement("canvas");
-                        canvas.width = Math.max(1, Math.round(source.naturalWidth * scale));
-                        canvas.height = Math.max(1, Math.round(source.naturalHeight * scale));
-                        canvas.getContext("2d").drawImage(source, 0, 0, canvas.width, canvas.height);
-                        resolve(canvas.toDataURL("image/jpeg", 0.85));
-                    });
-                    source.addEventListener("error", reject);
-                    source.src = reader.result;
-                });
-                reader.addEventListener("error", reject);
-                reader.readAsDataURL(file);
-            });
-        }
-
-        // Validates and saves a newly submitted game.
-        gameForm.addEventListener("submit", async (event) => {
-            event.preventDefault();
-            const imageFile = gameForm.elements.image.files[0];
-            if (!imageFile || imageFile.size > 2 * 1024 * 1024) {
-                formStatus.textContent = "Please choose an image smaller than 2 MB.";
-                return;
-            }
-            const game = {
-                id: `custom-${crypto.randomUUID()}`,
-                title: gameForm.elements.title.value.trim(),
-                creator: gameForm.elements.creator.value.trim(),
-                url: gameForm.elements.url.value.trim(),
-                genre: gameForm.elements.genre.value,
-                description: gameForm.elements.description.value.trim(),
-                image: await readImage(imageFile)
-            };
-            if (!/^https?:\/\//i.test(game.url)) {
-                formStatus.textContent = "Please use a full web link starting with https:// or http://.";
-                return;
-            }
-            const savedGames = JSON.parse(localStorage.getItem("camd-games") || "[]");
-            savedGames.push(game);
-            localStorage.setItem("camd-games", JSON.stringify(savedGames));
-            addGameCard(game);
-            gameForm.reset();
-            formStatus.textContent = `${game.title} was added to the directory.`;
             updateProjects();
         });
         loadGames();
