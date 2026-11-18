@@ -1,12 +1,23 @@
 [
  {
-		"id": "featured", 
+		"id": "deadwater", 
 		"title": "Dead Water",
 		"creator": "Genevieve Dreger",
 		"genre": "Horror",
 		"description": "Short Horror game about a Fishermans daughter investigating her fathers disappearance at sea",
 		"url": "https://kkengeri.itch.io/level-design-final-project",
 		"image": "images/deadWaterLogo_Genevieve Dreger.png",
+		"linkText": "View project",
+		"artClass": "art-ink"
+	},
+	{
+		"id": "flashpoint", 
+		"title": "Flash Point",
+		"creator": "Zach Fischer, Aidan O'Donnell, Hunter Mack, Meadow Dexter, Dylan Perry, Brodie Morris",
+		"genre": "Puzzle",
+		"description": "Stay vigilant, watch your back, and illuminate the path ahead.",
+		"url": "https://threethrow.itch.io/flashpoint",
+		"image": "images/FlashPoint",
 		"linkText": "View project",
 		"artClass": "art-ink"
 	}
